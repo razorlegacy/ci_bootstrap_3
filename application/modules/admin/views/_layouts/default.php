@@ -13,6 +13,8 @@
 					<a href="account"><i class="fa fa-circle text-success"></i> Online</a>
 				</div>
 			</div>
+			<?php // (Optional) Add Search box here ?>
+			<?php //$this->insert('partials::sidemenu_search'); ?>
 			<?php $this->insert('partials::sidemenu'); ?>
 		</section>
 	</aside>
@@ -25,7 +27,7 @@
 		</section>
 		<section class="content">
 			<?=$this->section('content')?>
-			<?php //$this->insert('partials::back'); ?>
+			<?php $this->insert('partials::back_btn'); ?>
 		</section>
 	</div>
 
@@ -33,6 +35,7 @@
 	<footer class="main-footer">
 		<?php if (ENVIRONMENT=='development'): ?>
 			<div class="pull-right hidden-xs">
+				CI Bootstrap Version: <strong><?php echo CI_BOOTSTRAP_VERSION; ?></strong>, 
 				CI Version: <strong><?php echo CI_VERSION; ?></strong>, 
 				Elapsed Time: <strong>{elapsed_time}</strong> seconds, 
 				Memory Usage: <strong>{memory_usage}</strong>

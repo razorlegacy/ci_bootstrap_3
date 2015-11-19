@@ -25,6 +25,30 @@ class API_Controller extends MY_Controller {
 		// TODO: implement API Key or JWT handling
 		$this->mUser = NULL;
 	}
+	
+	// Verify request method
+	protected function verify_method($method, $error_response = NULL, $error_code = 404)
+	{
+		if ($this->mMethod!=strtoupper($method))
+		{
+			if ($error_response===NULL)
+				$this->to_error_method_not_allowed();
+			else
+				$this->render_json($error_response, $error_code);
+		}
+	}
+	
+	// Verify user role
+	protected function verify_role($role, $error_response = NULL, $error_code = 404)
+	{
+		if ( empty($this->mUser) || $this->mUser->role!=strtolower($role) )
+		{
+			if ($error_response===NULL)
+				$this->to_error_unauthorized();
+			else
+				$this->render_json($error_response, $error_code);
+		}
+	}
 
 	// Parse request to obtain request info (method, body)
 	protected function parse_request()
@@ -61,7 +85,10 @@ class API_Controller extends MY_Controller {
 			{
 				// JSON from text body
 				$data = file_get_contents("php://input");
-				$params = array_merge($params, json_decode(trim($data), TRUE));
+				if ( !empty($data) )
+				{
+					$params = array_merge($params, json_decode(trim($data), TRUE));
+				}
 			}
 		}
 
@@ -86,6 +113,7 @@ class API_Controller extends MY_Controller {
 	 * 	[GET] /items/{id}				=> get_item(id)
 	 * 	[GET] /items/{id}/{subitem}		=> get_subitems(id, subitem)
 	 * 	[POST] /items 					=> create_item()
+	 * 	[POST] /items/{id}/{subitem}	=> create_subitem(id, subitem)
 	 * 	[PUT] /items/{id}				=> update_item(id)
 	 * 	[DELETE] /items/{id}			=> remove_item(id)
 	 *
@@ -108,7 +136,10 @@ class API_Controller extends MY_Controller {
 					$this->get_items();
 				break;
 			case 'POST':
-				if ( empty($item_id) )
+			case 'POST':
+				if ( !empty($item_id) && !empty($subitem) )
+					$this->create_subitem($item_id, $subitem);
+				else if ( empty($item_id) )
 					$this->create_item();
 				else
 					$this->to_error_not_found();
@@ -157,6 +188,15 @@ class API_Controller extends MY_Controller {
 	protected function create_item()
 	{
 		$data = array('params' => $this->mParams);
+		$this->to_not_implemented($data);
+	}
+
+	protected function create_subitem($parent_id, $subitem)
+	{
+		$data = array(
+			'parent_id' => (int)$parent_id,
+			'subitem' => $subitem
+		);
 		$this->to_not_implemented($data);
 	}
 

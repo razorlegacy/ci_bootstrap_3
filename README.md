@@ -1,16 +1,17 @@
 ## CodeIgniter 3 Bootstrap 
 
-**Work in progress**
+**Note: This project is still in progress, but welcome for any issues encountered**
 
 A starter template that supports multi-tenant (Frontend / Admin Panel / API) website in a single application.
 
 This repository is developed upon the following tools: 
-* [CodeIgniter](http://www.codeigniter.com/) (v3.0.1) - PHP framework
+* [CodeIgniter](http://www.codeigniter.com/) (v3.0.3) - PHP framework
 * [CodeIgniter HMVC Extensions](https://bitbucket.org/wiredesignz/codeigniter-modular-extensions-hmvc) - modular structure by [wiredesignz](http://wiredesignz.co.nz/)
+* [codeigniter-base-model](https://github.com/jamierumbelow/codeigniter-base-model) - more advanced CRUD functions for models
 * [Bootstrap](http://getbootstrap.com/) (v3.3.5) - popular frontend framework
 * [Grocery CRUD](http://www.grocerycrud.com/) (v1.5.2) - feature-rich library to build CRUD tables
 * [Image CRUD](http://www.grocerycrud.com/image-crud) (v0.6) - CRUD library for image management
-* [AdminLTE](https://github.com/almasaeed2010/AdminLTE) (v2.3.0) - bootstrap theme for Admin Panel
+* [AdminLTE](https://github.com/almasaeed2010/AdminLTE) (v2.3.2) - bootstrap theme for Admin Panel
 
 
 ### Features
@@ -26,6 +27,7 @@ This repository contains setup for rapid development:
 * User authentication for Admin Panel (Login, Change Password, etc.)
 * Preset layouts and templates
 * Preset asset pipeline (e.g. minify scripts, image optimization) via Gulp (reference from [gulp-starter 2.0 branch](https://github.com/greypants/gulp-starter/tree/2.0))
+* Preset data structure for Blogging (with pagination) and Cover Photos (carousel), which can be managed from Admin Panel
 * Form Builder library to help with form rendering with Bootstrap theme, form validation, etc.
 * Breadcrumb and Pagination handling fit with Bootstrap theme
 * Custom 404 pages for Frontend Website and Admin Panel
@@ -66,7 +68,7 @@ application/                    --- Main CodeIgniter source files
         MY_Controller.php       --- Important class which contains shared logic of all controllers
         MY_Form_validation.php  --- Contains additional rule for validation
         MY_Loader.php           --- Required for HMVC extension
-        MY_Model.php            --- Contains shared function for model classes (can consider to replace by https://github.com/jamierumbelow/codeigniter-base-model)
+        MY_Model.php            --- Contains shared function for model classes
         MY_Router.php           --- Required for HMVC extension
     helpers/                    --- Contains custom helper functions being used throughout this repo
     language/                   --- Preset language files
@@ -95,10 +97,18 @@ assets/
     uploads/                    --- Default directory of upload files, where permission should set as writable
 gulpfile.js/                    --- Task runner following gulp-starter 2.0 practice
 screenshots/                    --- Screenshot images for preview
-sql/                            --- MySQL data which contains preset user data
+sql/                            --- MySQL files
+    backup/                     --- Files which will be created when backup database from CLI
+    core/                       --- Files contains preset data divided by feature
+    latest.sql                  --- Latest version of all preset data
 system/                         --- CodeIgniter core files (unchanged as clean CI3 installation)
 .htaccess                       --- URL rewrite for Apache web server (require mod enabled)
 ```
+
+
+### Setup Guide
+
+To be completed
 
 
 ### Screenshots
@@ -121,6 +131,5 @@ More screenshots can be viewed from the [screenshots folder](https://github.com/
 * Enhance Form Builder library to support more field types
 * Widget helper to include reusable views (e.g. for Admin Panel components)
 * Example of using Image CRUD
-* Database migration setup (consider using [Phinx](https://phinx.org/) instead of CodeIgniter built-in one)
 * API authentication (by API key or JSON Web Token, i.e. JWT)
 * More helpers to enhance code reusability
